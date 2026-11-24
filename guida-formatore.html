@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guida per chi forma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE lavoro: un copione da tenere sulla cattedra
+   IDEA il libretto del capotreno: per ogni fermata cosa dire e cosa controllare
+   PICTURE la stessa linea a cinque colori della web app, come indice
+   COLOUR bianco, i cinque colori di linea, inchiostro quasi nero
+   TYPE Figtree 800 + Figtree
+   LAYOUT colonna di lettura; i copioni in riquadri da leggere ad alta voce */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#0e1116);--ink:light-dark(#14161a,#eef0f3);--soft:light-dark(#f3f5f8,#171b22);--line:light-dark(#d9dee6,#2a303a);--mut:light-dark(#5b6472,#9aa3b2);--c1:#e6261f;--c2:#0a5cff;--c3:#00a05a;--c4:#ffb400;--c5:#8a3ffc}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 Figtree,system-ui,sans-serif;overflow-x:clip}
+.wrap{max-width:860px;margin:0 auto;padding:0 max(16px,4vw)}
+nav.idx{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:2}
+nav.idx .wrap{display:flex;gap:6px;flex-wrap:wrap;padding-block:10px;overflow-x:auto}
+nav.idx a{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:4px 12px;border:1px solid var(--line);border-radius:18px;text-decoration:none;color:var(--ink);font-size:14px}
+nav.idx i{width:10px;height:10px;border-radius:50%}
+h1{font-size:clamp(32px,5vw,46px);line-height:1.05;letter-spacing:-.02em;margin:28px 0 10px;font-weight:800;text-wrap:balance}
+h2{font-size:30px;line-height:1.1;margin:48px 0 6px;font-weight:800;padding-top:14px;border-top:8px solid var(--c)}
+h3{font-size:20px;margin:30px 0 6px}
+h3 small{font-weight:400;color:var(--mut);font-size:15px}
+p,li{max-width:70ch}
+.lab{font-weight:800;font-size:14px;color:var(--c);margin:14px 0 4px}
+.read{background:var(--soft);border-left:6px solid var(--c);border-radius:0 12px 12px 0;padding:12px 16px;margin:6px 0 10px}
+.read p{margin:.3em 0}
+.box{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+ul,ol{padding-left:22px}
+li{margin:3px 0}
+a{color:var(--c,var(--c2))}
+.b1{--c:var(--c1)}.b2{--c:var(--c2)}.b3{--c:var(--c3)}.b4{--c:#c78a00}.b5{--c:var(--c5)}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:18px 0;color:var(--mut);font-size:14px}
+@media print{nav.idx{display:none}h2{page-break-before:always}.read{break-inside:avoid}body{font-size:11.5pt}}
+</style>
+</head>
+<body>
+<nav class="idx"><div class="wrap">
+<a href="#prima">Prima di iniziare</a>
+<a href="#b1"><i style="background:var(--c1)"></i>Blocco 1</a>
+<a href="#b2"><i style="background:var(--c2)"></i>Blocco 2</a>
+<a href="#b3"><i style="background:var(--c3)"></i>Blocco 3</a>
+<a href="#b4"><i style="background:var(--c4)"></i>Blocco 4</a>
+<a href="#b5"><i style="background:var(--c5)"></i>Blocco 5</a>
+<a href="index.html">Web app ↗</a>
+</div></nav>
+<main class="wrap">
+<h1>Guida per chi forma</h1>
+<p>Questa guida accompagna la web app “Le scuole del mio territorio”. Per ogni tappa trovi tre cose: <b>cosa spiegare</b> (i concetti che devi far passare), <b>leggi così</b> (un testo da leggere ad alta voce o da usare come traccia) e <b>come guidare</b> (cosa fare mentre la classe lavora). Le tappe hanno lo stesso numero e lo stesso titolo che i ragazzi vedono sullo schermo.</p>
+
+<section id="prima" class="b2">
+<h2>Prima di iniziare</h2>
+<p><b>Il tuo ruolo.</b> In questo percorso non orienti la scelta e non dai giudizi sulle scuole. Mostri gli strumenti, aiuti a cercare, controlli che ogni dato abbia una fonte. Se qualcuno chiede “ma lei quale sceglierebbe?”, riporta la domanda sui dati: “Guardiamo cosa dice la tua scheda”.</p>
+<div class="box"><div class="lab">Checklist</div><ul>
+<li>Un dispositivo connesso ogni 2-3 ragazzi; LIM con connessione.</li>
+<li>La web app aperta sulla LIM e su ogni dispositivo (stesso indirizzo per tutti).</li>
+<li>La mappa delle scuole del territorio da proiettare (Kit docente, pagina “Mappatura”).</li>
+<li>Per il Blocco 4: un token Orienta Express per ciascuno e la verifica che ognuno possa aprire la propria email in classe (in alternativa, un account fornito dalla scuola).</li>
+<li>Prova tu stesso, il giorno prima, una ricerca su Eduscopio e una sull'Atlante del Lavoro.</li>
+</ul></div>
+<p><b>Salvataggio.</b> La web app salva le risposte nel browser del dispositivo. Se i ragazzi cambiano dispositivo tra un blocco e l'altro, a fine blocco devono usare “Esporta i miei dati” (dalla pagina Inizio) e “Importa” sul nuovo dispositivo. Ricordalo negli ultimi cinque minuti di ogni blocco, insieme al PDF del blocco.</p>
+<div class="box"><div class="lab">Link di riferimento</div><ul>
+<li>Eduscopio: <a href="https://eduscopio.it">eduscopio.it</a></li>
+<li>Unica – Scuola in Chiaro: <a href="https://unica.istruzione.gov.it">unica.istruzione.gov.it</a> · accesso diretto <a href="https://cercalatuascuola.istruzione.it">cercalatuascuola.istruzione.it</a></li>
+<li>Scelta dell'indirizzo (MIM): <a href="https://www.mim.gov.it/scelta-dell-indirizzo-nella-scuola-secondaria-di-secondo-grado">mim.gov.it</a></li>
+<li>Orienta Express: <a href="https://app.orienta-express.it/">app.orienta-express.it</a></li>
+<li>Atlante del Lavoro e delle Qualificazioni (INAPP): <a href="https://www.inapp.gov.it/atlantelavoro/">inapp.gov.it/atlantelavoro</a></li>
+</ul></div>
+</section>
+
+<section id="b1" class="b1">
+<h2>Blocco 1 – Mappo le scuole del territorio</h2>
+<p>Obiettivo: alla fine delle cinque ore la classe ha un registro di tutte le scuole superiori raggiungibili e ogni gruppo sa su quali scuole lavorerà.</p>
+
+<h3>Tappa 1 · Come è fatta la scuola superiore <small>30'</small></h3>
+<div class="lab">Cosa spiegare</div>
+<ul><li>I tre canali: licei, istituti tecnici, istituti professionali. Durano cinque anni e portano tutti al diploma, che permette di iscriversi all'università.</li>
+<li>Esistono anche percorsi quadriennali e la formazione professionale regionale (IeFP), che dà una qualifica dopo tre anni.</li>
+<li>I termini che useremo sempre: indirizzo, articolazione, quadro orario, PTOF, PCTO.</li></ul>
+<div class="lab">Leggi così</div>
+<div class="read"><p>«Nei prossimi cinque incontri facciamo un lavoro da ricercatori. Non vi chiederò cosa vi piace o chi siete: vi chiederò di trovare informazioni vere, verificate, con la fonte. Alla fine ognuno avrà un dossier sulle due o tre scuole che gli interessano di più, da portare a casa e mostrare in famiglia.</p>
+<p>Partiamo dalle basi. Dopo la terza media ci sono tre grandi strade. I <b>licei</b> danno una preparazione ampia e teorica e di solito portano all'università. Gli <b>istituti tecnici</b> uniscono teoria e pratica in un settore preciso, economico o tecnologico: con il diploma si può lavorare subito o continuare a studiare. Gli <b>istituti professionali</b> hanno molto laboratorio e preparano a un mestiere. Tutte e tre durano cinque anni e finiscono con l'esame di Stato.</p>
+<p>Ci sono poi due varianti: alcune scuole hanno percorsi in <b>quattro anni</b>, e la Regione organizza corsi di <b>formazione professionale</b> che dopo tre anni danno una qualifica.</p>
+<p>Cinque parole che sentirete spesso. L'<b>indirizzo</b> è il tipo di percorso dentro la scuola, per esempio “Informatica”; l'<b>articolazione</b> è una specializzazione che nei tecnici di solito si sceglie dal terzo anno. Il <b>quadro orario</b> è la tabella con le materie e le ore settimanali. Il <b>PTOF</b> è il documento ufficiale in cui ogni scuola racconta cosa offre. Il <b>PCTO</b> sono le esperienze fuori dalla classe, spesso in aziende o enti. Scrivete adesso le definizioni con parole vostre nella tappa 1.»</p></div>
+<div class="lab">Come guidare</div>
+<ul><li>Per ogni canale cita una scuola di Termoli presa dalla mappa.</li><li>Lascia 10 minuti per scrivere il glossario; leggi a voce alta due o tre definizioni e correggi gli errori.</li></ul>
+
+<h3>Tappa 2 · Prova Eduscopio <small>30'</small></h3>
+<div class="lab">Cosa spiegare</div>
+<ul><li>Eduscopio è un sito della Fondazione Agnelli. Si sceglie l'obiettivo (università o lavoro), l'indirizzo, il comune di partenza e la distanza: restituisce l'elenco delle scuole di quell'indirizzo nella zona.</li>
+<li>Oggi lo usiamo solo come motore di ricerca delle scuole. I dati sui risultati li leggeremo nel Blocco 4.</li></ul>
+<div class="lab">Leggi così</div>
+<div class="read"><p>«Eduscopio funziona come un motore di ricerca delle scuole. Vi fa quattro domande: dopo il diploma pensi di più all'università o al lavoro? Quale indirizzo ti interessa? Da quale comune parti? Quanti chilometri sei disposto a fare? Guardate la LIM: scelgo università, liceo scientifico, Termoli, 30 chilometri. Ecco l'elenco. Ora fate la stessa ricerca in coppia e annotate nella tappa 2 cosa avete impostato e cosa avete trovato. Oggi non guardiamo ancora i numeri delle classifiche: ci serve solo sapere quali scuole esistono.»</p></div>
+<div class="lab">Come guidare</div>
+<ul><li>Fai la ricerca alla LIM lentamente, schermata per schermata.</li><li>Controlla che ogni coppia abbia scritto il numero di scuole trovate.</li></ul>
+
+<h3>Tappa 3 · Cerco le scuole per indirizzo <small>1h30</small></h3>
+<div class="lab">Cosa spiegare</div>
+<ul><li>Ogni gruppo riceve un blocco di indirizzi e li cerca uno per uno.</li><li>Per tecnici e professionali va fatta la ricerca sia in modalità “università” sia “lavoro”: gli elenchi possono essere diversi.</li></ul>
+<div class="lab">Leggi così</div>
+<div class="read"><p>«Adesso vi divido il lavoro. Ogni gruppo ha un blocco di indirizzi: lo trovate nel menu della tappa 3. Cercate ogni indirizzo e per ogni scuola trovata aggiungete una riga nel registro: nome della scuola, comune, indirizzo e codice meccanografico, cioè il codice di dieci caratteri che identifica la scuola. Scrivete il nome esattamente come compare. Se cercate un tecnico o un professionale, provate sia “università” sia “lavoro”.»</p></div>
+<div class="lab">Come guidare</div>
+<ul><li>Assegna i blocchi: licei classico e scientifico; licei artistico, scienze umane e linguistico; tecnici economici; tecnici tecnologici; professionali.</li><li>Passa tra i banchi: l'errore più frequente è scrivere il nome dell'indirizzo al posto della scuola.</li></ul>
+
+<h3>Tappa 4 · Confronto con la mappa <small>1h</small></h3>
+<div class="lab">Cosa spiegare</div>
+<ul><li>Eduscopio mostra solo gli indirizzi con abbastanza diplomati da calcolare i dati: scuole piccole, indirizzi nuovi e quadriennali possono mancare.</li></ul>
+<div class="lab">Leggi così</div>
+<div class="read"><p>«Ora mettiamo insieme il lavoro di tutti e lo confrontiamo con la mappa che ho preparato. Spuntate le scuole che la classe ha trovato. Alcune non le ha trovate nessuno: non è un errore vostro. Eduscopio calcola i risultati dei diplomati, quindi se una scuola ha pochi diplomati o un indirizzo appena nato non compare. Per queste scuole serve un'altra fonte, quella ufficiale del Ministero.»</p></div>
+<div class="lab">Come guidare</div>
+<ul><li>Proietta la mappa; fai dire a ogni gruppo le scuole trovate e segna le mancanti.</li><li>Chiedi di rispondere alla domanda finale della tappa prima di passare oltre.</li></ul>
+
+<h3>Tappa 5 · Verifico su Scuola in Chiaro <small>1h</small></h3>
+<div class="lab">Cosa spiegare</div>
+<ul><li>Scuola in Chiaro si trova nella piattaforma Unica del Ministero, area Orientamento. È la fonte ufficiale per sedi, indirizzi attivi, PTOF, RAV e rendicontazione sociale.</li><li>Si cerca per comune o per codice meccanografico.</li></ul>
+<div class="lab">Leggi così</div>
+<div class="read"><p>«Scuola in Chiaro è il sito ufficiale del Ministero: lo usano anche le famiglie per fare l'iscrizione. Scrivo “Termoli” e compaiono le scuole del comune. Apro una scheda: qui vedo la sede, gli indirizzi attivi quest'anno, il sito e il PTOF. Nella tappa 5 la web app vi mostra solo le scuole che non avete trovato su Eduscopio: per ognuna scrivete sede, indirizzi attivi e sito.»</p></div>
+
+<h3>Tappa 6 · Le scuole del mio gruppo <small>30'</small></h3>
+<div class="lab">Leggi così</div>
+<div class="read"><p>«Ultimo passo di oggi: scegliete il numero del vostro gruppo nella tappa 6. Comparirà l'elenco delle scuole che approfondirete la prossima volta. Prima di chiudere scaricate il PDF del blocco e, se la prossima volta userete un altro dispositivo, esportate i vostri dati dalla pagina Inizio.»</p></div>
+<div class="lab">Come guidare</div>
+<ul><li>Gruppo 1 Alfano; 2 Majorana tecnico; 3 Majorana liceo e Jacovitti; 4 Boccardi e Tiberio; 5 Federico di Svevia, Larino, Casacalenda; 6 Guglionesi, Montenero, Santa Croce, San Salvo.</li></ul>
+</section>
+
+<section id="b2" class="b2">
+<h2>Blocco 2 – La scheda di ogni scuola</h2>
+<p>Obiettivo: una scheda completa per ogni scuola assegnata, con le fonti.</p>
+
+<h3>Tappa 1 · Organizzo il lavoro <small>20'</small></h3>
+<div class="lab">Cosa spiegare</div>
+<ul><li>Le informazioni si trovano in tre punti: la sezione “Offerta formativa” o “Indirizzi” del sito della scuola, il PTOF, il quadro orario.</li><li>Nel gruppo ci sono tre ruoli: chi cerca, chi verifica, chi scrive.</li></ul>
+<div class="lab">Leggi così</div>
+<div class="read"><p>«Oggi costruite la carta d'identità di ogni scuola. Vi dividete i ruoli: chi cerca naviga nel sito e nel PTOF, chi verifica controlla che l'informazione sia aggiornata e ufficiale, chi scrive riordina. La regola d'oro è una sola: ogni dato ha una fonte. “Me l'ha detto mio cugino” non è una fonte; il PTOF 2025-2028 sì.»</p></div>
+
+<h3>Tappa 2 · Indirizzi, materie e orario <small>2h10</small></h3>
+<div class="lab">Cosa spiegare</div>
+<ul><li>Come si legge un quadro orario: righe = materie, colonne = anni, numeri = ore settimanali.</li><li>Le materie caratterizzanti sono quelle con più ore e quelle che alle medie non esistono (es. Economia aziendale, Tecnologie informatiche, Diritto, Laboratorio di cucina).</li><li>Il biennio è più generale, il triennio più specialistico.</li></ul>
+<div class="lab">Leggi così</div>
+<div class="read"><p>«Proietto un quadro orario. Ogni riga è una materia, ogni colonna un anno, ogni numero le ore a settimana. Italiano e matematica ci sono ovunque: non ci dicono molto. Cerchiamo invece le materie che danno il carattere alla scuola: quelle con tante ore e quelle che alle medie non avete mai visto. Notate anche come cambia la tabella dal terzo anno: lì il percorso si specializza. Nella scheda scrivete almeno tre materie caratterizzanti con le ore del biennio e del triennio, la durata del percorso, l'orario settimanale e le lingue.»</p></div>
+<div class="lab">Come guidare</div>
+<ul><li>Fai vedere dove si trova il PTOF sul sito di una scuola e su Scuola in Chiaro.</li><li>A metà tempo controlla che ogni gruppo abbia almeno una scheda avviata per ogni scuola: i pulsanti in alto mostrano la percentuale.</li></ul>
+
+<h3>Tappa 3 · Laboratori e attività <small>2h</small></h3>
+<div class="lab">Cosa spiegare</div>
+<ul><li>Fonti utili: PTOF (laboratori, progetti, PCTO), notizie del sito, rendicontazione sociale.</li><li>La differenza tra attività ricorrenti (ogni anno) e occasionali (una volta sola): solo le prime dicono davvero come si lavora in quella scuola.</li></ul>
+<div class="lab">Leggi così</div>
+<div class="read"><p>«Ora scopriamo cosa si fa oltre alle lezioni. Nel PTOF trovate i laboratori e i progetti; nella sezione notizie vedete cosa è successo davvero negli ultimi anni: stage, gemellaggi Erasmus, gare, certificazioni di lingua o di informatica. Per ogni attività scrivete l'anno e se si ripete. Un viaggio fatto una volta nel 2023 è un'informazione diversa da un laboratorio che c'è tutti gli anni. Annotate anche le date dell'open day e, alla fine, le fonti usate.»</p></div>
+
+<h3>Tappa 4 · Controllo le schede <small>30'</small></h3>
+<div class="lab">Leggi così</div>
+<div class="read"><p>«La tappa 4 vi mostra quanto è completa ogni scheda e cosa manca. Non serve arrivare al cento per cento oggi: annotate le parti vuote, le completeremo all'inizio del prossimo blocco. Prima di chiudere: PDF del blocco ed esportazione dei dati se cambiate dispositivo.»</p></div>
+</section>
+
+<section id="b3" class="b3">
+<h2>Blocco 3 – Catalogo e selezione</h2>
+<p>Obiettivo: tutta la classe conosce tutte le scuole; ognuno sceglie 2 o 3 scuole motivando con i dati.</p>
+
+<h3>Tappa 1 · Completo e verifico <small>1h</small></h3>
+<div class="lab">Leggi così</div>
+<div class="read"><p>«Prima di presentare le schede ai compagni, le rendiamo affidabili. Usate la lista della tappa 1: ogni dato viene da una fonte ufficiale? Le attività hanno l'anno? Ci sono frasi come “è una bella scuola”? Quelle sono opinioni: toglietele o sostituitele con un dato.»</p></div>
+<div class="lab">Come guidare</div>
+<ul><li>Verifica a campione due dati per gruppo aprendo la fonte.</li></ul>
+
+<h3>Tappa 2 · Ascolto le presentazioni <small>1h30</small></h3>
+<div class="lab">Cosa spiegare</div>
+<ul><li>Ogni gruppo ha 5-7 minuti per scuola: indirizzi, materie caratterizzanti, laboratori, durata, come arrivarci.</li><li>Chi ascolta compila la tabella di confronto; le righe delle proprie scuole si riempiono con i dati delle schede.</li></ul>
+<div class="lab">Leggi così</div>
+<div class="read"><p>«Ogni gruppo presenta le sue scuole come farebbe un giornalista: solo fatti, nessun giudizio. Chi ascolta compila la tabella della tappa 2. Alla fine di questa ora avrete informazioni su tutte le scuole del territorio, non solo sulle vostre.»</p></div>
+
+<h3>Tappa 3 · Scelgo i criteri <small>30'</small></h3>
+<div class="lab">Leggi così</div>
+<div class="read"><p>«Per scegliere servono criteri, cioè le domande con cui confrontate le scuole. Ve ne propongo cinque, tutti basati su dati che avete raccolto: le materie caratterizzanti, le attività di laboratorio, la durata e l'orario, la distanza e i trasporti, cosa fanno di solito i diplomati dopo. Spuntate quelli che userete. Un esempio di motivazione corretta: “La scelgo perché ha 6 ore di laboratorio a settimana dal terzo anno e uno stage ogni anno”. Un esempio da evitare: “La scelgo perché ci va il mio amico”.»</p></div>
+
+<h3>Tappa 4 · Seleziono 2-3 scuole <small>1h15</small></h3>
+<div class="lab">Come guidare</div>
+<ul><li>Resta a disposizione per domande sui dati; non dare consigli sulla scelta.</li><li>Controlla che ogni motivazione citi almeno un dato presente nelle schede.</li></ul>
+<div class="read"><p>«Ora lavorate da soli. Scegliete due o tre scuole e l'indirizzo, e per ognuna scrivete i dati che vi hanno convinto. Se siete indecisi tra più scuole, sceglietene tre: nei prossimi blocchi i dati vi aiuteranno a capire meglio.»</p></div>
+
+<h3>Tappa 5 · Il mio gruppo di approfondimento <small>45'</small></h3>
+<div class="lab">Come guidare</div>
+<ul><li>Raggruppa chi ha scelto le stesse scuole (3-4 per gruppo).</li><li>Raccogli i PDF dei Blocchi 2 e 3 in una cartella condivisa: è il catalogo di classe.</li></ul>
+</section>
+
+<section id="b4" class="b4">
+<h2>Blocco 4 – Eduscopio e Orienta Express</h2>
+<p>Obiettivo: i dati sui diplomati delle scuole scelte (3 ore) e il Progetto di Sviluppo di ciascuno (2 ore).</p>
+
+<h3>Tappa 1 · Leggo gli indicatori <small>30'</small></h3>
+<div class="lab">Cosa spiegare</div>
+<ul><li><b>Università:</b> l'indice FGA combina la media dei voti e i crediti ottenuti al primo anno da chi si è iscritto; Eduscopio mostra anche la percentuale di diplomati che si iscrivono all'università.</li>
+<li><b>Lavoro:</b> la percentuale di diplomati che hanno trovato lavoro, la coerenza tra studi e lavoro, i tempi per il primo contratto.</li>
+<li>Due avvertenze: si confrontano solo scuole dello stesso indirizzo; i dati riguardano diplomati di alcuni anni prima.</li></ul>
+<div class="lab">Leggi così</div>
+<div class="read"><p>«Torniamo su Eduscopio, ma questa volta leggiamo i numeri. Se scegliete “università”, il dato principale è l'<b>indice FGA</b>: mette insieme i voti e i crediti che gli ex studenti di quella scuola hanno ottenuto al primo anno di università. Più è alto, meglio se la sono cavata. Se scegliete “lavoro”, guardate quanti diplomati hanno trovato un lavoro, quanti lo hanno trovato coerente con quello che avevano studiato e quanto tempo è servito.</p>
+<p>Due regole. Primo: si confrontano scuole dello stesso indirizzo, mai un liceo con un professionale, perché preparano a cose diverse. Secondo: questi numeri raccontano i diplomati di qualche anno fa. Sono un dato utile, non una sentenza sulla scuola.»</p></div>
+
+<h3>Tappa 2 · Cerco i dati delle mie scuole <small>1h45</small></h3>
+<div class="lab">Leggi così</div>
+<div class="read"><p>«Per ogni scuola che avete selezionato cercate l'indirizzo su Eduscopio in tutte e due le modalità e copiate i valori. Indicate anche la posizione: per esempio “seconda su cinque scuole dello stesso indirizzo nella zona”. Se Eduscopio non ha dati, spuntate la casella e aprite Scuola in Chiaro: nella sezione sui risultati a distanza trovate informazioni simili.»</p></div>
+<div class="lab">Come guidare</div>
+<ul><li>Controlla che i ragazzi non confondano percentuali e posizioni in classifica.</li></ul>
+
+<h3>Tappa 3 · Tre dati chiave <small>45'</small></h3>
+<div class="read"><p>«Per ogni scuola scegliete i tre dati più utili e riportateli sul cartellone della classe. Leggerò i cartelloni e correggeremo insieme eventuali errori di lettura.»</p></div>
+
+<h3>Tappa 4 · Orienta Express: accesso <small>15'</small></h3>
+<div class="lab">Cosa spiegare</div>
+<ul><li>Registrazione su app.orienta-express.it con “Crea un Account”; conferma dal link ricevuto via email; login.</li><li>Password: almeno 8 caratteri, una maiuscola, un numero, un carattere speciale (! _ - *).</li></ul>
+<div class="lab">Leggi così</div>
+<div class="read"><p>«Nelle prossime due ore usiamo Orienta Express. Vi servirà nell'ultimo blocco per confrontare i lavori che troverete con alcune informazioni su di voi: quali ambiti di studio preferite e con quale stile lavorate meglio. Andate su app.orienta-express.it, cliccate “Crea un Account”, inserite la vostra email e una password con almeno otto caratteri, una maiuscola, un numero e un carattere speciale. Aprite l'email, cliccate sul link di conferma e tornate a fare il login.»</p></div>
+
+<h3>Tappa 5 · Orienta Express: questionari <small>1h</small></h3>
+<div class="lab">Leggi così</div>
+<div class="read"><p>«In alto a destra trovate il riquadro “Inserire Codice Token”. Scrivete il codice che vi consegno e premete “Attiva percorso”. Comparirà la “Lista dei questionari”: premete “Avvia”, rispondete e andate avanti con “Continua”. Alla fine di ogni questionario tornate alla “Dashboard” e passate al successivo. Non ci sono risposte giuste o sbagliate: rispondete pensando a come siete adesso. Quando avete finito tutti i questionari, scaricate il Progetto di Sviluppo dalla Dashboard.»</p></div>
+<div class="lab">Come guidare</div>
+<ul><li>Tieni un elenco dei token consegnati.</li><li>Chi finisce prima legge il proprio Progetto di Sviluppo senza confrontarlo con i compagni.</li></ul>
+
+<h3>Tappa 6 · Leggo il mio Progetto di Sviluppo <small>45'</small></h3>
+<div class="lab">Cosa spiegare</div>
+<ul><li>Due sezioni da usare: Preferenze di studio e stili orientativi (Comunicativo, Creativo, Pratico, Tecnico, Razionale, Riflessivo).</li><li>Il profilo non è un voto e non si confronta con quello degli altri.</li></ul>
+<div class="lab">Leggi così</div>
+<div class="read"><p>«Il Progetto di Sviluppo descrive come siete oggi, in base alle risposte che avete dato. Non è un giudizio e non esistono profili migliori di altri. Per il nostro lavoro ci servono due parti. Nelle <b>Preferenze di studio</b> cercate i due o tre ambiti con il valore più alto. Negli <b>stili orientativi</b> trovate sei stili: chi è <b>Comunicativo</b> lavora bene con le persone e le parole; chi è <b>Creativo</b> cerca idee nuove; chi è <b>Pratico</b> impara facendo con le mani; chi è <b>Tecnico</b> vuole capire come funzionano le cose e lavora con precisione; chi è <b>Razionale</b> ragiona per dati e logica; chi è <b>Riflessivo</b> osserva, approfondisce e pensa prima di agire. Scrivete nella tappa 6 lo stile con il punteggio più alto e il secondo. Nel prossimo blocco li confronterete con i lavori che troverete.»</p></div>
+</section>
+
+<section id="b5" class="b5">
+<h2>Blocco 5 – Sbocchi, raffronto e dossier</h2>
+<p>Obiettivo: per ogni scuola scelta, i lavori collegati, il titolo che serve e il confronto con il Progetto di Sviluppo; dossier finale in PDF.</p>
+
+<h3>Tappa 1 · Come si usa l'Atlante del Lavoro <small>30'</small></h3>
+<div class="lab">Cosa spiegare</div>
+<ul><li>L'Atlante del Lavoro (INAPP) descrive il lavoro in 24 settori economico-professionali, divisi in processi e aree di attività.</li><li>La sezione Atlante e Qualificazioni collega le attività ai titoli: diplomi, qualifiche regionali, ITS Academy, lauree.</li><li>Si cerca per parola chiave o navigando per settore.</li></ul>
+<div class="lab">Leggi così</div>
+<div class="read"><p>«L'Atlante del Lavoro è una grande mappa di tutti i lavori in Italia, curata da un ente pubblico di ricerca. È divisa in 24 settori, per esempio la ristorazione, la meccanica, i servizi finanziari. Dentro ogni settore ci sono le attività concrete che le persone svolgono, e per ognuna l'Atlante indica quali titoli di studio preparano a farla. Guardate: parto dall'indirizzo “Enogastronomia”, scrivo “cuoco” nella ricerca, apro l'attività, leggo cosa si fa e quali qualificazioni la collegano. Così capisco se per quel lavoro basta il diploma, se serve un corso ITS Academy dopo il diploma o una laurea.»</p></div>
+<div class="lab">Come guidare</div>
+<ul><li>Prova l'esempio prima della lezione: i nomi delle sezioni del sito possono cambiare.</li></ul>
+
+<h3>Tappa 2 · Cerco gli sbocchi <small>1h30</small></h3>
+<div class="lab">Cosa spiegare</div>
+<ul><li>Per ogni professione bisogna annotare il titolo richiesto: basta il diploma, ITS Academy, laurea, laurea con abilitazione o esame di Stato, qualifica regionale.</li><li>L'ITS Academy è un percorso post-diploma di due o tre anni molto legato alle aziende.</li></ul>
+<div class="lab">Leggi così</div>
+<div class="read"><p>«Per ogni scuola che avete scelto trovate il settore collegato e da tre a cinque professioni. Per ognuna scrivete cosa fa e quale titolo serve. Attenzione: alcune professioni richiedono la laurea e anche un esame di abilitazione, come l'ingegnere o il commercialista; altre si possono fare con il diploma; altre ancora sono più accessibili dopo un ITS Academy, un corso di due o tre anni dopo il diploma, fatto insieme alle aziende. L'ultima colonna, sulla coerenza con il Progetto di Sviluppo, la completerete nella prossima tappa.»</p></div>
+
+<h3>Tappa 3 · Raffronto con il Progetto di Sviluppo <small>45'</small></h3>
+<div class="lab">Cosa spiegare</div>
+<ul><li>Il raffronto è una verifica di coerenza, non una decisione: le professioni trovate rientrano negli ambiti di studio e negli stili emersi?</li></ul>
+<div class="lab">Leggi così</div>
+<div class="read"><p>«Mettete uno accanto all'altro i lavori che avete trovato e i dati del vostro Progetto di Sviluppo, che la web app vi ricorda in cima alla tappa. Per ogni professione chiedetevi: rientra nei miei ambiti di studio preferiti? Usa lo stile con cui lavoro meglio? Rispondete sì, in parte o no nella colonna della tappa 2, poi scrivete una riga di sintesi per ogni scuola. Se una scuola ha pochi lavori coerenti, non significa che sia sbagliata: è un'informazione in più da portare all'open day.»</p></div>
+
+<h3>Tappa 4 · Il mio dossier <small>1h15</small></h3>
+<div class="read"><p>«Il dossier finale raccoglie da solo tutto quello che avete fatto nei cinque blocchi. Qui aggiungete le ultime cose: le date degli open day e le domande che volete fare alla scuola. Una buona domanda nasce da un dato che manca: per esempio “Quante ore di laboratorio ci sono al primo anno?” oppure “Con quali aziende fate il PCTO?”.»</p></div>
+
+<h3>Tappa 5 · Presento la mia selezione <small>45'</small></h3>
+<div class="read"><p>«Ognuno ha due minuti e tre frasi: una sulle materie e i laboratori, una su cosa fanno i diplomati, una sugli sbocchi e sui titoli richiesti. Solo dati, citando la fonte.»</p></div>
+<div class="lab">Come guidare</div>
+<ul><li>Cronometra; se una frase contiene un'opinione chiedi “qual è il dato?”.</li></ul>
+
+<h3>Tappa 6 · Consegna <small>15'</small></h3>
+<div class="read"><p>«Premete “Genera il dossier finale (PDF)”: si apre la finestra di stampa, scegliete “Salva come PDF”. Portatelo a casa e mostratelo alla vostra famiglia: vi servirà al momento dell'iscrizione.»</p></div>
+<div class="lab">Come guidare</div>
+<ul><li>Raccogli i dossier in PDF per la scuola, se previsto.</li></ul>
+</section>
+</main>
+<footer><div class="wrap">Guida per chi forma · Le scuole del mio territorio · Orienta Express</div></footer>
+</body>
+</html>

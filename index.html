@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Le scuole del mio territorio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE everyday: chi studia lavora da solo con istruzioni chiare
+   IDEA una linea ferroviaria: cinque stazioni = cinque blocchi da 5 ore
+   PICTURE la linea con le stazioni che si colorano man mano che si compila
+   COLOUR bianco, cinque colori di linea, inchiostro quasi nero
+   TYPE Figtree 800 per i titoli, Figtree per il testo
+   LAYOUT colonna unica e calma; sopra la linea, sotto la tappa attiva */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#0e1116);--ink:light-dark(#14161a,#eef0f3);--soft:light-dark(#f3f5f8,#171b22);--line:light-dark(#d9dee6,#2a303a);--mut:light-dark(#5b6472,#9aa3b2);
+--c1:#e6261f;--c2:#0a5cff;--c3:#00a05a;--c4:#ffb400;--c5:#8a3ffc;--cur:var(--c2)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 Figtree,system-ui,sans-serif;overflow-x:clip}
+a{color:var(--cur)}
+.wrap{max-width:980px;margin:0 auto;padding:0 max(16px,4vw)}
+header.top{border-bottom:1px solid var(--line);padding:14px 0}
+header.top .wrap{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.brand{font-weight:800;font-size:18px;letter-spacing:-.01em}
+.brand small{display:block;font-weight:400;font-size:13px;color:var(--mut)}
+nav.blk{display:flex;gap:6px;flex-wrap:wrap}
+nav.blk a{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:4px 10px;border-radius:18px;border:1px solid var(--line);text-decoration:none;color:var(--ink);font-size:14px}
+nav.blk a.on{border-color:var(--ink);font-weight:600}
+nav.blk i{width:10px;height:10px;border-radius:50%;display:inline-block}
+h1{font-size:clamp(32px,5vw,48px);line-height:1.05;letter-spacing:-.02em;margin:28px 0 10px;text-wrap:balance;font-weight:800}
+h2{font-size:24px;line-height:1.15;margin:0 0 6px;font-weight:800}
+h3{font-size:18px;margin:18px 0 6px}
+.lead{font-size:17px;max-width:68ch;color:var(--ink)}
+.meta{color:var(--mut);font-size:14px}
+/* linea */
+.metro{position:relative;margin:22px 0 8px;padding:8px 0 0}
+.metro svg{width:100%;height:120px;display:block}
+.stations{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:-8px}
+.st{text-decoration:none;color:var(--ink);font-size:14px;line-height:1.3}
+.st b{display:block;font-size:15px}
+.st span{color:var(--mut)}
+@media(max-width:600px){.metro svg{height:80px}.stations{grid-template-columns:minmax(0,1fr);gap:10px;margin-top:0}.st{display:block;padding-left:12px;border-left:4px solid var(--line)}}
+/* pannelli e form */
+.panel{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:18px;margin:16px 0}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(max-width:600px){.grid2{grid-template-columns:minmax(0,1fr)}}
+label.f{display:block;font-weight:600;font-size:15px;margin:12px 0 4px}
+.grid2 label.f{min-height:1.4em}
+label.f em{font-weight:400;font-style:normal;color:var(--mut);font-size:13px;display:block}
+input[type=text],input[type=number],input[type=date],select,textarea{width:100%;font:16px/1.4 Figtree,system-ui,sans-serif;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-height:44px}
+textarea{min-height:88px;resize:vertical}
+input:focus,select:focus,textarea:focus,button:focus-visible,a:focus-visible{outline:3px solid color-mix(in srgb,var(--cur) 45%,transparent);outline-offset:1px}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:8px 0;font-size:15px}
+.chk input{width:22px;height:22px;flex:none;margin-top:1px;accent-color:var(--cur)}
+button,.btn{font:600 15px Figtree,system-ui,sans-serif;min-height:44px;padding:10px 16px;border-radius:22px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+button.pri,.btn.pri{background:var(--cur);border-color:var(--cur);color:#fff}
+button.ghost{background:transparent}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:18px 0}
+.bar .sp{flex:1}
+/* tappa */
+.tbar{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 4px}
+.tbar button{min-height:36px;padding:4px 12px;font-size:14px}
+.tbar button.on{background:var(--cur);border-color:var(--cur);color:#fff}
+.tbar button.done{border-color:var(--cur)}
+.tappa{border-top:6px solid var(--cur);background:var(--soft);border-radius:4px 4px 14px 14px;padding:18px;margin-top:10px}
+.tappa .tag{font-size:13px;color:var(--mut)}
+.todo{border-left:4px solid var(--cur);padding:8px 12px;margin:10px 0;background:var(--bg);border-radius:0 10px 10px 0}
+.todo b{display:block;font-size:14px}
+.links a{display:inline-block;margin-right:14px}
+/* righe dinamiche */
+.rows{display:grid;gap:10px;margin-top:6px}
+.row{display:grid;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));align-items:end}
+.row label{font-size:13px;color:var(--mut);display:block;margin-bottom:2px}
+.row .del{justify-self:end}
+/* schede scuola */
+.schools{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.schools button{min-height:36px;padding:4px 12px;font-size:14px}
+.schools button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.schools button .pc{font-weight:400;color:inherit;opacity:.7;margin-left:4px}
+.hint{font-size:14px;color:var(--mut);margin:4px 0}
+.mini{width:100%;height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.mini i{display:block;height:100%;background:var(--cur)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:6px;text-align:left;vertical-align:top}
+.dlg{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:16px;z-index:9}
+.dlg.on{display:flex}
+.dlg div{background:var(--bg);border-radius:14px;padding:20px;max-width:420px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:18px 0;color:var(--mut);font-size:14px}
+#print{display:none}
+@media print{
+ body>*:not(#print){display:none!important}
+ #print{display:block;color:#000;background:#fff;font:12pt/1.45 Figtree,Arial,sans-serif}
+ #print h1{font-size:22pt;margin:0 0 4pt}#print h2{font-size:15pt;margin:14pt 0 4pt;border-bottom:2px solid #000}
+ #print h3{font-size:12.5pt;margin:10pt 0 2pt}
+ #print .pf{margin:2pt 0 6pt;page-break-inside:avoid}#print .pf b{display:block;font-size:10pt;color:#444}
+ #print table{font-size:10pt}#print th,#print td{border:1px solid #999}
+}
+@media(prefers-reduced-motion:no-preference){.metro .train{transition:transform .8s ease}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+ <div class="brand">Le scuole del mio territorio<small>Orienta Express · ricerca guidata · 5 blocchi da 5 ore</small></div>
+ <nav class="blk" id="nav"></nav>
+</div></header>
+<main class="wrap" id="app"></main>
+<footer><div class="wrap">Le risposte vengono salvate solo nel browser di questo dispositivo: nessun dato viene inviato. Se cambi dispositivo usa “Esporta i miei dati” e poi “Importa”. Ogni blocco genera il suo PDF; alla fine puoi generare il dossier completo. · <a href="guida-formatore.html">Guida per chi forma</a></div></footer>
+<div class="dlg" id="dlg"><div><p id="dlgTxt"></p><div class="bar"><button id="dlgNo">Annulla</button><button class="pri" id="dlgYes">Conferma</button></div></div></div>
+<div id="print"></div>
+<script>
+{
+const KEY = "oe-scuole-territorio-v1";
+const COL = ["--c1","--c2","--c3","--c4","--c5"];
+const ISTITUTI = [
+ {id:"alfano",n:"IIS \"Alfano da Termoli\"",c:"Termoli",ind:"Liceo Scientifico (anche Scienze applicate, Sportivo, curvatura biomedica); Liceo Classico \"G. Perrotta\""},
+ {id:"majitt",n:"IIS \"E. Majorana\" – Istituto Tecnico Tecnologico",c:"Termoli",ind:"Chimica, materiali e biotecnologie; Elettronica ed elettrotecnica; Informatica e telecomunicazioni; Meccanica, meccatronica ed energia"},
+ {id:"majlic",n:"IIS \"E. Majorana\" – Liceo Scienze applicate",c:"Termoli",ind:"Liceo Scientifico opzione Scienze applicate"},
+ {id:"jacovitti",n:"Liceo Artistico \"B. Jacovitti\" (IIS Majorana)",c:"Termoli",ind:"Architettura e ambiente; Arti figurative"},
+ {id:"boccardi",n:"IIS \"Boccardi\" – Istituto Tecnico Economico",c:"Termoli",ind:"Amministrazione, finanza e marketing; AFM Esabac Techno; Turismo; Sistemi informativi aziendali (quadriennale)"},
+ {id:"tiberio",n:"IIS \"Tiberio\" – Istituto Tecnico",c:"Termoli",ind:"Trasporti e logistica (nautico); quadriennale Tecnico IA e Realtà immersiva (da verificare)"},
+ {id:"svevia",n:"IPSEOA \"Federico di Svevia\"",c:"Termoli",ind:"Enogastronomia e ospitalità alberghiera; Gestione delle acque e risanamento ambientale"},
+ {id:"larino",n:"IIS Larino",c:"Larino",ind:"Liceo Classico e Scientifico \"F. D'Ovidio\"; Tecnico Agraria, agroalimentare e agroindustria; Costruzioni, ambiente e territorio"},
+ {id:"casacalenda",n:"IIS \"Silvio di Lalla\"",c:"Casacalenda",ind:"Professionale Manutenzione e assistenza tecnica; Tecnico economico AFM"},
+ {id:"guglionesi",n:"Omnicomprensivo \"G. Rivera\"",c:"Guglionesi",ind:"Liceo (ex Istituto Magistrale): indirizzi da verificare"},
+ {id:"montenero",n:"Omnicomprensivo \"Sammy Basso\"",c:"Montenero di Bisaccia",ind:"Liceo Scienze umane opz. economico-sociale; Professionale Manutenzione e assistenza tecnica"},
+ {id:"santacroce",n:"Omnicomprensivo di Santa Croce",c:"Santa Croce di Magliano",ind:"Liceo Scientifico opz. Scienze applicate"},
+ {id:"sansalvo",n:"Omnicomprensivo \"R. Mattioli\"",c:"San Salvo (CH)",ind:"Liceo Scientifico e Scienze applicate; Tecnico economico AFM; IPSIA Manutenzione e assistenza tecnica, Servizi per la sanità e l'assistenza sociale"}
+];
+const GRUPPI = {"1":["alfano"],"2":["majitt"],"3":["majlic","jacovitti"],"4":["boccardi","tiberio"],"5":["svevia","larino","casacalenda"],"6":["guglionesi","montenero","santacroce","sansalvo"]};
+const LINK = {edu:"https://eduscopio.it",unica:"https://unica.istruzione.gov.it",sic:"https://cercalatuascuola.istruzione.it",mim:"https://www.mim.gov.it/scelta-dell-indirizzo-nella-scuola-secondaria-di-secondo-grado",oe:"https://app.orienta-express.it/",atl:"https://www.inapp.gov.it/atlantelavoro/",atlE:"https://www.inapp.gov.it/atlantelavoro/esplora/"};
+const STILI = ["Comunicativo","Creativo","Pratico","Tecnico","Razionale","Riflessivo"];
+
+let S = {};
+try { S = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { S = {}; }
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+const get = (p) => p.split(".").reduce((o, k) => (o == null ? undefined : o[k]), S);
+const set = (p, v) => { const ks = p.split("."); let o = S; ks.slice(0, -1).forEach((k, i) => { if (o[k] == null || typeof o[k] !== "object") o[k] = /^\d+$/.test(ks[i + 1]) ? [] : {}; o = o[k]; }); o[ks.at(-1)] = v; save(); };
+const inst = id => ISTITUTI.find(x => x.id === id);
+const myGroupSchools = () => GRUPPI[get("stud.gruppo")] || [];
+const selected = () => (get("b3.sel") || []).filter(x => x && x.ist).map(x => x.ist);
+const schedeIds = () => { const g = myGroupSchools(); const extra = get("b2.extra") || []; return [...new Set([...g, ...extra])]; };
+
+// ---------- helpers di campo ----------
+const lab = (l, h) => `<label class="f">${l}${h ? `<em>${h}</em>` : ""}</label>`;
+const T = (k, l, h, ph) => `<div>${lab(l, h)}<input type="text" id="${k}" data-k="${k}" placeholder="${esc(ph || "")}" value="${esc(get(k))}"></div>`;
+const TD = (k, l, def) => `<div>${lab(l)}<input type="text" id="${k}" data-k="${k}" value="${esc(get(k) ?? def ?? "")}"></div>`;
+const N = (k, l, h) => `<div>${lab(l, h)}<input type="text" inputmode="decimal" id="${k}" data-k="${k}" value="${esc(get(k))}"></div>`;
+const A = (k, l, h, ph) => `<div>${lab(l, h)}<textarea id="${k}" data-k="${k}" placeholder="${esc(ph || "")}">${esc(get(k))}</textarea></div>`;
+const SEL = (k, l, opts, h) => `<div>${lab(l, h)}<select id="${k}" data-k="${k}"><option value="">Scegli…</option>${opts.map(o => { const [v, t] = Array.isArray(o) ? o : [o, o]; return `<option value="${esc(v)}" ${get(k) === v ? "selected" : ""}>${esc(t)}</option>`; }).join("")}</select></div>`;
+const C = (k, l) => `<label class="chk"><input type="checkbox" id="${k}" data-k="${k}" ${get(k) ? "checked" : ""}><span>${l}</span></label>`;
+const TODO = (t) => `<div class="todo"><b>Cosa fare</b>${t}</div>`;
+const LNK = (arr) => `<p class="links">${arr.map(([t, u]) => `<a href="${u}" target="_blank" rel="noopener">${t} ↗</a>`).join("")}</p>`;
+function ROWS(k, cols, min = 1, addTxt = "Aggiungi riga") {
+  let arr = get(k); if (!Array.isArray(arr)) arr = [];
+  while (arr.length < min) arr.push({});
+  const h = arr.map((r, i) => `<div class="row">${cols.map(c => {
+    const kk = `${k}.${i}.${c.k}`, v = r?.[c.k] ?? "";
+    if (c.opts) return `<div><label for="${kk}">${c.l}</label><select id="${kk}" data-k="${kk}"><option value="">Scegli…</option>${c.opts.map(o => { const [ov, ot] = Array.isArray(o) ? o : [o, o]; return `<option value="${esc(ov)}" ${v === ov ? "selected" : ""}>${esc(ot)}</option>`; }).join("")}</select></div>`;
+    return `<div><label for="${kk}">${c.l}</label><input type="text" id="${kk}" data-k="${kk}" value="${esc(v)}"></div>`;
+  }).join("")}<button class="ghost del" data-del="${k}" data-i="${i}" aria-label="Elimina riga">Elimina</button></div>`).join("");
+  return `<div class="rows">${h}</div><div class="bar"><button data-add="${k}">${addTxt}</button></div>`;
+}
+const PICK = () => `<div class="panel"><p><b>Non hai ancora selezionato le tue scuole.</b> Di solito si fa nel Blocco 3; puoi sceglierle anche qui: i campi da compilare compariranno subito sotto.</p><div class="grid2">${[0,1,2].map(i=>SEL(`b3.sel.${i}.ist`,`Scuola ${i+1}${i===2?" (facoltativa)":""}`,istOpts)).join("")}</div></div>`;
+const istOpts = ISTITUTI.map(x => [x.id, `${x.n} – ${x.c}`]);
+
+// ---------- contenuti dei blocchi ----------
+const B = [
+ { n:1, t:"Mappo le scuole del territorio", sub:"Eduscopio e Scuola in Chiaro per sapere quali scuole posso raggiungere",
+   tappe:[
+   { t:"Come è fatta la scuola superiore", d:"30'", h:()=>`
+     ${TODO("Ascolta la spiegazione e scrivi con parole tue cosa significano questi termini. Ti serviranno in tutti i blocchi.")}
+     <div class="grid2">${[["liceo","Liceo"],["tecnico","Istituto tecnico"],["prof","Istituto professionale"],["iefp","Formazione professionale regionale (IeFP)"],["indirizzo","Indirizzo e articolazione"],["quadro","Quadro orario"],["ptof","PTOF"],["pcto","PCTO"]].map(([k,l])=>A("b1.glos."+k,l)).join("")}</div>
+     ${LNK([["Scelta dell'indirizzo – Ministero",LINK.mim]])}`},
+   { t:"Prova Eduscopio", d:"30'", h:()=>`
+     ${TODO("Ripeti con il tuo compagno o la tua compagna la ricerca mostrata alla LIM e annota cosa hai impostato e cosa hai trovato.")}
+     ${LNK([["Apri Eduscopio",LINK.edu]])}
+     <div class="grid2">${SEL("b1.prova.obiettivo","Obiettivo scelto",["Università","Lavoro"])}${T("b1.prova.indirizzo","Indirizzo di studio cercato")}${T("b1.prova.comune","Comune di partenza")}${N("b1.prova.km","Distanza massima (km)")}${N("b1.prova.num","Quante scuole ha trovato?")}${T("b1.prova.prime","Le prime tre scuole dell'elenco")}</div>`},
+   { t:"Cerco le scuole per indirizzo", d:"1h30", h:()=>`
+     ${TODO("Il formatore assegna al tuo gruppo un blocco di indirizzi. Cerca ogni indirizzo su Eduscopio (per tecnici e professionali prova sia “università” sia “lavoro”) e aggiungi una riga per ogni scuola trovata.")}
+     ${SEL("b1.blocco","Blocco di indirizzi assegnato",["Licei: classico, scientifico, scienze applicate, sportivo","Licei: artistico, scienze umane, linguistico","Tecnici economici: AFM, turismo","Tecnici tecnologici: meccanica, elettronica, informatica, chimica, trasporti, agraria, costruzioni","Professionali: enogastronomia, manutenzione, servizi per la sanità"])}
+     <h3>Registro delle scuole trovate</h3>
+     ${ROWS("b1.registro",[{k:"scuola",l:"Scuola"},{k:"comune",l:"Comune"},{k:"indirizzo",l:"Indirizzo di studio"},{k:"codice",l:"Codice meccanografico"}],3,"Aggiungi una scuola")}`},
+   { t:"Confronto con la mappa", d:"1h", h:()=>`
+     ${TODO("Il formatore proietta la mappa delle scuole del territorio. Spunta le scuole che la classe ha trovato su Eduscopio. Quelle senza spunta andranno verificate su Scuola in Chiaro.")}
+     ${ISTITUTI.map(x=>C("b1.trovate."+x.id,`<b>${esc(x.n)}</b> – ${esc(x.c)}<br><span class="hint">${esc(x.ind)}</span>`)).join("")}
+     ${A("b1.perche","Perché secondo te alcune scuole non compaiono su Eduscopio?")}`},
+   { t:"Verifico su Scuola in Chiaro", d:"1h", h:()=>{ const miss = ISTITUTI.filter(x=>!get("b1.trovate."+x.id)); return `
+     ${TODO("Per ogni scuola non trovata su Eduscopio cerca su Scuola in Chiaro (dentro Unica) e verifica sede, indirizzi attivi e sito.")}
+     ${LNK([["Unica – Scuola in Chiaro",LINK.unica],["Scuola in Chiaro (accesso diretto)",LINK.sic]])}
+     ${miss.length ? miss.map(x=>`<div class="panel"><h3>${esc(x.n)} – ${esc(x.c)}</h3><div class="grid2">${T(`b1.ver.${x.id}.sede`,"Sede")}${T(`b1.ver.${x.id}.sito`,"Sito istituzionale")}</div>${A(`b1.ver.${x.id}.ind`,"Indirizzi attivi trovati")}</div>`).join("") : `<p class="hint">Hai spuntato tutte le scuole nella tappa precedente: non ci sono scuole da verificare.</p>`}`;}},
+   { t:"Le scuole del mio gruppo", d:"30'", h:()=>`
+     ${TODO("Scegli il numero del tuo gruppo: compariranno le scuole che approfondirai nel Blocco 2.")}
+     ${SEL("stud.gruppo","Il mio gruppo di ricerca",["1","2","3","4","5","6"].map(g=>[g,"Gruppo "+g]))}
+     <div id="grpOut">${myGroupSchools().length ? `<ul>${myGroupSchools().map(id=>`<li><b>${esc(inst(id).n)}</b> – ${esc(inst(id).c)}</li>`).join("")}</ul>` : `<p class="hint">Nessun gruppo scelto.</p>`}</div>`}
+ ]},
+ { n:2, t:"La scheda di ogni scuola", sub:"Materie, orario, laboratori e attività degli ultimi anni, con le fonti",
+   tappe:[
+   { t:"Organizzo il lavoro", d:"20'", h:()=>`
+     ${TODO("Dividetevi i ruoli nel gruppo e controlla le scuole su cui lavorerai. Puoi aggiungere altre scuole se il formatore lo chiede.")}
+     ${SEL("b2.ruolo","Il mio ruolo nel gruppo",["Cerco le informazioni","Verifico le fonti","Scrivo e riordino"])}
+     ${SEL("stud.gruppo","Il mio gruppo",["1","2","3","4","5","6"].map(g=>[g,"Gruppo "+g]))}
+     <h3>Aggiungi altre scuole alle tue schede</h3>
+     ${ISTITUTI.filter(x=>!myGroupSchools().includes(x.id)).map(x=>`<label class="chk"><input type="checkbox" data-extra="${x.id}" ${(get("b2.extra")||[]).includes(x.id)?"checked":""}><span>${esc(x.n)} – ${esc(x.c)}</span></label>`).join("")}
+     <p class="hint">Regola d'oro: ogni dato va scritto con la sua fonte (sito della scuola, PTOF, Scuola in Chiaro).</p>`},
+   { t:"Indirizzi, materie e orario", d:"2h10", school:true, h:(id)=>`
+     ${TODO("Cerca sul sito della scuola (sezione Offerta formativa o Indirizzi) e nel PTOF. Nel quadro orario guarda le materie caratterizzanti: quelle con più ore e quelle che alle medie non esistono.")}
+     <p class="hint">Indirizzi indicati nella mappa: ${esc(inst(id).ind)}</p>
+     <div class="grid2">${T(`b2.s.${id}.sede`,"Sede e indirizzo")}${T(`b2.s.${id}.sito`,"Sito e contatti")}${T(`b2.s.${id}.arrivo`,"Come ci arrivo","mezzi e tempo di viaggio")}${T(`b2.s.${id}.durata`,"Durata del percorso","5 anni, 4 anni…")}${T(`b2.s.${id}.orario`,"Orario settimanale","ore e giorni")}${T(`b2.s.${id}.lingue`,"Lingue straniere")}</div>
+     ${A(`b2.s.${id}.indirizzi`,"Indirizzi e articolazioni attivi","per i tecnici: da quale anno si sceglie l'articolazione")}
+     <h3>Materie caratterizzanti</h3>
+     ${ROWS(`b2.s.${id}.materie`,[{k:"materia",l:"Materia"},{k:"ind",l:"Indirizzo"},{k:"bie",l:"Ore biennio"},{k:"tri",l:"Ore triennio"}],3,"Aggiungi materia")}`},
+   { t:"Laboratori e attività", d:"2h", school:true, h:(id)=>`
+     ${TODO("Usa il PTOF, la sezione notizie del sito e la rendicontazione sociale. Per ogni attività indica l'anno scolastico e se si ripete ogni anno.")}
+     ${A(`b2.s.${id}.lab`,"Laboratori presenti nella scuola")}
+     <h3>Attività degli ultimi 2-3 anni</h3>
+     ${ROWS(`b2.s.${id}.att`,[{k:"nome",l:"Attività"},{k:"tipo",l:"Tipo",opts:["PCTO / stage","Erasmus / scambio","Gara o concorso","Certificazione","Progetto","Altro"]},{k:"anno",l:"Anno scolastico"},{k:"freq",l:"Frequenza",opts:["Ricorrente","Occasionale"]}],3,"Aggiungi attività")}
+     <div class="grid2">${T(`b2.s.${id}.open`,"Open day","date e luogo")}${A(`b2.s.${id}.fonti`,"Fonti consultate","sito, PTOF, Scuola in Chiaro… con la data")}</div>`},
+   { t:"Controllo le schede", d:"30'", h:()=>`
+     ${TODO("Controlla quanto è completa ogni scheda. Le sezioni vuote vanno completate all'inizio del Blocco 3.")}
+     ${schedeIds().map(id=>{const p=pctSchool(id);return `<div class="panel"><b>${esc(inst(id).n)}</b><div class="mini" aria-label="completezza"><i style="width:${p}%"></i></div><span class="hint">${p}% completa${p<100?` · mancano: ${missingSchool(id).join(", ")}`:""}</span></div>`}).join("") || `<p class="hint">Scegli prima il gruppo nella tappa 1.</p>`}`}
+ ]},
+ { n:3, t:"Catalogo e selezione", sub:"Confronto le scuole e ne scelgo 2 o 3 con i dati alla mano",
+   tappe:[
+   { t:"Completo e verifico", d:"1h", h:()=>`
+     ${TODO("Completa le parti vuote delle tue schede (Blocco 2) e verifica ogni dato con questa lista.")}
+     ${C("b3.chk.fonte","Ogni dato viene da una fonte ufficiale")}${C("b3.chk.anno","Per le attività ho indicato l'anno scolastico")}${C("b3.chk.chiaro","Le informazioni sono chiare e senza opinioni personali")}
+     <p><a href="#blocco-2">Torna alle schede del Blocco 2</a></p>`},
+   { t:"Ascolto le presentazioni", d:"1h30", h:()=>`
+     ${TODO("Mentre ogni gruppo presenta, completa la tua tabella di confronto. Le righe delle tue scuole si riempiono con i dati delle tue schede: puoi correggerli.")}
+     ${ISTITUTI.map(x=>`<div class="panel"><h3>${esc(x.n)} – ${esc(x.c)}</h3><div class="grid2">${TD(`b3.conf.${x.id}.mat`,"Materie caratterizzanti",autoMat(x.id))}${TD(`b3.conf.${x.id}.lab`,"Laboratori e attività",(get(`b2.s.${x.id}.lab`)||"").slice(0,120))}${TD(`b3.conf.${x.id}.dur`,"Durata e orario",[get(`b2.s.${x.id}.durata`),get(`b2.s.${x.id}.orario`)].filter(Boolean).join(", "))}${TD(`b3.conf.${x.id}.dist`,"Distanza e trasporti",get(`b2.s.${x.id}.arrivo`)||"")}${SEL(`b3.conf.${x.id}.dopo`,"Dopo il diploma si va soprattutto",["All'università","Al lavoro","In entrambe le direzioni"])}</div></div>`).join("")}`},
+   { t:"Scelgo i criteri", d:"30'", h:()=>`
+     ${TODO("Spunta i criteri che userai per scegliere. Sono tutti basati su dati che hai raccolto.")}
+     ${[["mat","Le materie caratterizzanti"],["lab","Le attività laboratoriali"],["dur","Durata e orario"],["dist","Distanza e trasporti"],["dopo","Cosa fanno i diplomati dopo (università o lavoro)"]].map(([k,l])=>C("b3.crit."+k,l)).join("")}
+     ${T("b3.critAltro","Un altro criterio, se ti serve")}`},
+   { t:"Seleziono 2-3 scuole", d:"1h15", h:()=>`
+     ${TODO("Scegli 2 o 3 scuole e l'indirizzo che ti interessa. Per ognuna scrivi i dati che ti hanno convinto: devono comparire nelle schede o nella tabella di confronto.")}
+     ${[0,1,2].map(i=>`<div class="panel"><h3>Scelta ${i+1}${i===2?" (facoltativa)":""}</h3><div class="grid2">${SEL(`b3.sel.${i}.ist`,"Scuola",istOpts)}${T(`b3.sel.${i}.ind`,"Indirizzo")}</div>${A(`b3.sel.${i}.mot`,"I dati che motivano la scelta")}</div>`).join("")}`},
+   { t:"Il mio gruppo di approfondimento", d:"45'", h:()=>`
+     ${TODO("Il formatore forma nuovi gruppi con chi ha scelto le stesse scuole. Annota il gruppo e i compagni con cui lavorerai nei Blocchi 4 e 5.")}
+     ${T("b3.nuovoGruppo","Nuovo gruppo")}${T("b3.compagni","Con chi lavoro")}`}
+ ]},
+ { n:4, t:"Eduscopio e Orienta Express", sub:"Cosa fanno i diplomati delle mie scuole e il mio Progetto di Sviluppo",
+   tappe:[
+   { t:"Leggo gli indicatori", d:"30'", h:()=>`
+     ${TODO("Ascolta la spiegazione e scrivi cosa misura ogni indicatore. Ricorda: si confrontano solo scuole dello stesso indirizzo.")}
+     ${LNK([["Apri Eduscopio",LINK.edu]])}
+     ${A("b4.def.fga","Indice FGA (università)")}${A("b4.def.occ","Diplomati occupati (lavoro)")}${A("b4.def.coe","Coerenza tra studi e lavoro")}`},
+   { t:"Cerco i dati delle mie scuole", d:"1h45", h:()=>{ const s=selected(); return `
+     ${TODO("Per ogni scuola selezionata cerca su Eduscopio in modalità università e lavoro. Se un dato manca, spunta la casella e usa i risultati a distanza di Scuola in Chiaro.")}
+     ${LNK([["Eduscopio",LINK.edu],["Unica – Scuola in Chiaro",LINK.unica]])}
+     ${s.length ? s.map(id=>`<div class="panel"><h3>${esc(inst(id).n)}</h3><div class="grid2">${N(`b4.e.${id}.fga`,"Indice FGA")}${N(`b4.e.${id}.iscr`,"% iscritti all'università")}${N(`b4.e.${id}.occ`,"% diplomati occupati")}${N(`b4.e.${id}.coe`,"% coerenza studi-lavoro")}${T(`b4.e.${id}.tempo`,"Tempo per il primo contratto")}${T(`b4.e.${id}.pos`,"Posizione","es. 2ª su 5 scuole dello stesso indirizzo")}</div>${C(`b4.e.${id}.nd`,"Dato non disponibile su Eduscopio")}${A(`b4.e.${id}.sic`,"Risultati a distanza da Scuola in Chiaro")}</div>`).join("") : PICK()}`;}},
+   { t:"Tre dati chiave", d:"45'", h:()=>`
+     ${TODO("Per ogni scuola scegli i tre dati più utili da riportare sul cartellone della classe.")}
+     ${selected().map(id=>A(`b4.key.${id}`,esc(inst(id).n))).join("") || PICK()}`},
+   { t:"Orienta Express: accesso", d:"15'", h:()=>`
+     ${TODO("Apri Orienta Express, crea il tuo account e confermalo dall'email. Password: almeno 8 caratteri, una maiuscola, un numero e un carattere speciale (! _ - *).")}
+     ${LNK([["Apri Orienta Express",LINK.oe]])}
+     ${C("b4.oe.account","Ho cliccato “Crea un Account”")}${C("b4.oe.mail","Ho confermato l'account dal link nell'email")}${C("b4.oe.login","Ho effettuato il login")}`},
+   { t:"Orienta Express: questionari", d:"1h", h:()=>`
+     ${TODO("Inserisci il token nel riquadro “Inserire Codice Token” e premi “Attiva percorso”. Compila tutti i questionari della “Lista dei questionari”, poi scarica il Progetto di Sviluppo dalla Dashboard.")}
+     ${C("b4.oe.token","Ho attivato il percorso con il token")}${C("b4.oe.quest","Ho completato tutti i questionari")}${C("b4.oe.pds","Ho scaricato il Progetto di Sviluppo")}`},
+   { t:"Leggo il mio Progetto di Sviluppo", d:"45'", h:()=>`
+     ${TODO("Cerca due sezioni: Preferenze di studio e stili orientativi. Riporta qui i dati: li confronterai con gli sbocchi professionali nel Blocco 5.")}
+     ${A("b4.pds.pref","Preferenze di studio: i 2-3 ambiti con il valore più alto")}
+     <div class="grid2">${SEL("b4.pds.stile1","Lo stile con il punteggio più alto",STILI)}${N("b4.pds.p1","Punteggio")}${SEL("b4.pds.stile2","Il secondo stile",STILI)}${N("b4.pds.p2","Punteggio")}</div>`}
+ ]},
+ { n:5, t:"Sbocchi, raffronto e dossier", sub:"Atlante del Lavoro, confronto con il Progetto di Sviluppo e dossier finale",
+   tappe:[
+   { t:"Come si usa l'Atlante del Lavoro", d:"30'", h:()=>`
+     ${TODO("Segui l'esempio alla LIM e annota il percorso: indirizzo di studio → settore → attività → titolo richiesto.")}
+     ${LNK([["Atlante del Lavoro",LINK.atl],["Esplora l'Atlante",LINK.atlE]])}
+     ${A("b5.esempio","L'esempio visto in classe")}`},
+   { t:"Cerco gli sbocchi", d:"1h30", h:()=>{ const s=selected(); return `
+     ${TODO("Per ogni scuola selezionata trova il settore economico-professionale e 3-5 professioni. Per ognuna indica se basta il diploma o se servono ITS Academy o laurea.")}
+     ${s.length ? s.map(id=>`<div class="panel"><h3>${esc(inst(id).n)}</h3>${T(`b5.s.${id}.sep`,"Settore economico-professionale")}${ROWS(`b5.s.${id}.prof`,[{k:"nome",l:"Professione"},{k:"cosa",l:"Cosa fa"},{k:"tit",l:"Titolo richiesto",opts:["Basta il diploma","ITS Academy","Laurea","Laurea e abilitazione","Qualifica regionale (IeFP)"]},{k:"coe",l:"Coerente con il mio Progetto di Sviluppo",opts:["Sì","In parte","No"]}],3,"Aggiungi professione")}</div>`).join("") : PICK()}`;}},
+   { t:"Raffronto con il Progetto di Sviluppo", d:"45'", h:()=>`
+     ${TODO("Rileggi i dati del tuo Progetto di Sviluppo e la colonna sulla coerenza. Scrivi una riga di sintesi per ogni scuola.")}
+     <div class="panel"><b>Promemoria dal tuo Progetto di Sviluppo</b> <span class="hint">(si compila nel Blocco 4, tappa 6: qui si legge soltanto)</span><br>Preferenze di studio: ${esc(get("b4.pds.pref")||"non ancora compilate")}<br>Stile principale: ${esc(get("b4.pds.stile1")||"non indicato")}${get("b4.pds.stile2")?" · secondo stile: "+esc(get("b4.pds.stile2")):""}</div>
+     ${selected().map(id=>{const pr=(get(`b5.s.${id}.prof`)||[]).filter(r=>r&&r.nome);const si=pr.filter(r=>r.coe==="Sì").length;return A(`b5.raff.${id}`,esc(inst(id).n),`${pr.length} professioni trovate, ${si} coerenti con il Progetto di Sviluppo`)}).join("") || PICK()}`},
+   { t:"Il mio dossier", d:"1h15", h:()=>`
+     ${TODO("Completa le ultime informazioni per ogni scuola. Il dossier finale raccoglie automaticamente tutto il lavoro dei cinque blocchi.")}
+     ${selected().map(id=>`<div class="panel"><h3>${esc(inst(id).n)}</h3>${TD(`b5.d.${id}.open`,"Open day",get(`b2.s.${id}.open`)||"")}${A(`b5.d.${id}.dom`,"Le domande che farò alla scuola")}</div>`).join("") || PICK()}`},
+   { t:"Presento la mia selezione", d:"45'", h:()=>`
+     ${TODO("Hai 2 minuti. Prepara tre frasi che citano solo dati raccolti: una sulle materie, una sui diplomati, una sugli sbocchi.")}
+     ${A("b5.pres.1","Frase 1 – Materie e laboratori")}${A("b5.pres.2","Frase 2 – Cosa fanno i diplomati")}${A("b5.pres.3","Frase 3 – Sbocchi e titoli richiesti")}`},
+   { t:"Consegna", d:"15'", h:()=>`
+     ${TODO("Genera il dossier finale in PDF e condividilo con la tua famiglia in vista delle iscrizioni.")}
+     <div class="bar"><button class="pri" data-pdf="all">Genera il dossier finale (PDF)</button></div>`}
+ ]}
+];
+
+// ---------- completezza ----------
+function autoMat(id){ const m=(get(`b2.s.${id}.materie`)||[]).filter(r=>r&&r.materia).map(r=>r.materia); return m.join(", "); }
+const SCH = [["sede","sede"],["indirizzi","indirizzi"],["orario","orario"],["durata","durata"],["materie","materie"],["lab","laboratori"],["att","attività"],["fonti","fonti"]];
+function filledSch(id,k){ const v=get(`b2.s.${id}.${k}`); return Array.isArray(v) ? v.some(r=>r&&Object.values(r).some(Boolean)) : !!v; }
+function pctSchool(id){ return Math.round(SCH.filter(([k])=>filledSch(id,k)).length/SCH.length*100); }
+function missingSchool(id){ return SCH.filter(([k])=>!filledSch(id,k)).map(x=>x[1]); }
+function countFilled(o){ if(o==null) return [0,0]; if(typeof o!=="object") return [o?1:0,1]; return Object.values(o).reduce((a,v)=>{const [f,t]=countFilled(v);return [a[0]+f,a[1]+t]},[0,0]); }
+function pctBlock(n){ const [f,t]=countFilled(get("b"+n)); return t?Math.min(100,Math.round(f/Math.max(t,6)*100)):0; }
+
+// ---------- viste ----------
+const app = document.getElementById("app");
+let cur = {b:0,t:0,school:null};
+function nav(){ document.getElementById("nav").innerHTML = `<a href="#home" class="${cur.b===0?"on":""}">Inizio</a>` + B.map((b,i)=>`<a href="#blocco-${b.n}" class="${cur.b===b.n?"on":""}"><i style="background:var(${COL[i]})"></i>Blocco ${b.n}</a>`).join(""); }
+
+function metro(){
+  const pcs = B.map(b=>pctBlock(b.n));
+  const pts = B.map((b,i)=>`<g><circle cx="${10+i*20}%" cy="60" r="14" fill="var(--bg)" stroke="var(${COL[i]})" stroke-width="6"/><circle cx="${10+i*20}%" cy="60" r="${pcs[i]>0?7:0}" fill="var(${COL[i]})"/></g>`).join("");
+  const segs = B.slice(0,4).map((b,i)=>`<line x1="${10+i*20}%" y1="60" x2="${30+i*20}%" y2="60" stroke="var(${COL[i]})" stroke-width="10" stroke-linecap="round"/>`).join("");
+  return `<div class="metro"><svg role="img" aria-label="Linea dei cinque blocchi">${segs}${pts}</svg>
+  <div class="stations">${B.map((b,i)=>`<a class="st" href="#blocco-${b.n}"><b style="color:var(${COL[i]})">Blocco ${b.n}</b>${esc(b.t)}<br><span>5 ore · ${pcs[i]}% compilato</span></a>`).join("")}</div></div>`;
+}
+
+function home(){
+  document.documentElement.style.setProperty("--cur","var(--c2)");
+  app.innerHTML = `<h1>Le scuole del mio territorio</h1>
+  <p class="lead">In cinque blocchi da cinque ore costruisci una ricerca vera: trovi tutte le scuole superiori che puoi raggiungere, compili una scheda per ciascuna, ne scegli due o tre e scopri cosa fanno i diplomati, quali lavori si aprono e se serve una laurea. Alla fine hai un dossier tuo, fatto di dati e fonti.</p>
+  ${metro()}
+  <div class="panel"><h2>I miei dati</h2><div class="grid2">${T("stud.nome","Nome e cognome")}${T("stud.classe","Classe")}${T("stud.comune","Comune di residenza")}${SEL("stud.gruppo","Gruppo di ricerca",["1","2","3","4","5","6"].map(g=>[g,"Gruppo "+g]))}</div></div>
+  <div class="bar"><a class="btn pri" href="#blocco-1">Inizia dal Blocco 1</a><span class="sp"></span><button id="exp">Esporta i miei dati</button><label class="btn" for="imp">Importa</label><input type="file" id="imp" accept=".json,application/json" hidden><button class="ghost" id="clr">Cancella tutto</button></div>
+  <p class="hint" id="msg" role="status"></p>`;
+  bind();
+}
+
+function blocco(n){
+  const b = B[n-1]; const tp = b.tappe[cur.t] || b.tappe[0];
+  document.documentElement.style.setProperty("--cur",`var(${COL[n-1]})`);
+  let body;
+  if (tp.school) {
+    const ids = schedeIds(); if (!ids.includes(cur.school)) cur.school = ids[0] || null;
+    body = ids.length ? `<div class="schools" role="tablist">${ids.map(id=>`<button data-school="${id}" class="${id===cur.school?"on":""}">${esc(inst(id).n)}<span class="pc">${pctSchool(id)}%</span></button>`).join("")}</div>${tp.h(cur.school)}` : `<p class="hint">Scegli prima il tuo gruppo nella tappa 1.</p>`;
+  } else body = tp.h();
+  app.innerHTML = `<h1>${esc(b.t)}</h1><p class="lead">${esc(b.sub)} · Blocco ${n} di 5 · 5 ore</p>
+  <div class="tbar">${b.tappe.map((x,i)=>`<button data-t="${i}" class="${i===cur.t?"on":""}">Tappa ${i+1}</button>`).join("")}</div>
+  <section class="tappa"><span class="tag">Tappa ${cur.t+1} di ${b.tappe.length} · ${tp.d}</span><h2>${esc(tp.t)}</h2>${body}</section>
+  <div class="bar">${cur.t>0?`<button data-t="${cur.t-1}">← Indietro</button>`:""}<span class="sp"></span>${cur.t<b.tappe.length-1?`<button class="pri" data-t="${cur.t+1}">Continua →</button>`:`<button class="pri" data-pdf="${n}">Scarica il PDF del blocco ${n}</button>${n<5?`<a class="btn" href="#blocco-${n+1}">Vai al Blocco ${n+1}</a>`:""}`}</div>`;
+  bind();
+}
+
+function route(){
+  const h = location.hash.slice(1); const m = h.match(/^blocco-(\d)$/);
+  if (m) { const n=+m[1]; if (cur.b!==n) { cur.b=n; cur.t=0; } blocco(n); } else { cur.b=0; home(); }
+  nav(); window.scrollTo(0,0);
+}
+
+// ---------- eventi ----------
+function bind(){
+  app.querySelectorAll("[data-k]").forEach(el=>{
+    const ev = el.type==="checkbox"||el.tagName==="SELECT" ? "change" : "input";
+    el.addEventListener(ev, ()=>{ set(el.dataset.k, el.type==="checkbox"?el.checked:el.value); if (el.tagName==="SELECT"||el.type==="checkbox") { if (el.dataset.k==="stud.gruppo"||el.dataset.k.startsWith("b1.trovate")||el.dataset.k.startsWith("b3.sel")) rerender(); } });
+  });
+  app.querySelectorAll("[data-t]").forEach(el=>el.addEventListener("click",()=>{ cur.t=+el.dataset.t; blocco(cur.b); window.scrollTo(0,0); }));
+  app.querySelectorAll("[data-school]").forEach(el=>el.addEventListener("click",()=>{ cur.school=el.dataset.school; blocco(cur.b); }));
+  app.querySelectorAll("[data-add]").forEach(el=>el.addEventListener("click",()=>{ const k=el.dataset.add; const a=get(k)||[]; a.push({}); set(k,a); rerender(); }));
+  app.querySelectorAll("[data-del]").forEach(el=>el.addEventListener("click",()=>{ const k=el.dataset.del; const a=get(k)||[]; a.splice(+el.dataset.i,1); set(k,a); rerender(); }));
+  app.querySelectorAll("[data-extra]").forEach(el=>el.addEventListener("change",()=>{ const a=new Set(get("b2.extra")||[]); el.checked?a.add(el.dataset.extra):a.delete(el.dataset.extra); set("b2.extra",[...a]); }));
+  app.querySelectorAll("[data-pdf]").forEach(el=>el.addEventListener("click",()=>printOut(el.dataset.pdf)));
+  const exp=document.getElementById("exp"), imp=document.getElementById("imp"), clr=document.getElementById("clr"), msg=document.getElementById("msg");
+  if (exp) exp.onclick=()=>{ const blob=new Blob([JSON.stringify(S,null,1)],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=`ricerca-scuole-${(get("stud.nome")||"studente").replace(/\W+/g,"-")}.json`; document.body.appendChild(a); a.click(); a.remove(); msg.textContent="File esportato: conservalo e importalo sull'altro dispositivo."; };
+  if (imp) imp.onchange=()=>{ const f=imp.files[0]; if(!f) return; f.text().then(t=>{ try{ S=JSON.parse(t)||{}; save(); home(); document.getElementById("msg").textContent="Dati importati."; }catch(e){ msg.textContent="Il file non è valido."; } }); };
+  if (clr) clr.onclick=()=>ask("Vuoi cancellare tutte le risposte salvate su questo dispositivo?",()=>{ S={}; save(); home(); });
+}
+function rerender(){ const y=window.scrollY; cur.b?blocco(cur.b):home(); window.scrollTo(0,y); }
+function ask(t,ok){ const d=document.getElementById("dlg"); document.getElementById("dlgTxt").textContent=t; d.classList.add("on"); document.getElementById("dlgNo").onclick=()=>d.classList.remove("on"); document.getElementById("dlgYes").onclick=()=>{ d.classList.remove("on"); ok(); }; }
+
+// ---------- PDF (stampa) ----------
+function staticTappa(html){
+  const box=document.createElement("div"); box.innerHTML=html;
+  box.querySelectorAll(".todo,.links,.bar,button,.tbar,.mini").forEach(e=>e.remove());
+  box.querySelectorAll("input,select,textarea").forEach(e=>{
+    let v=""; const k=e.dataset.k;
+    if(e.type==="checkbox"){ const wrap=e.closest(".chk"); const t=wrap?wrap.textContent.trim():""; const val=e.checked; const p=document.createElement("div"); p.className="pf"; p.textContent=(val?"[x] ":"[ ] ")+t; (wrap||e).replaceWith(p); return; }
+    if(e.tagName==="SELECT"){ const o=e.options[e.selectedIndex]; v=o&&o.value?o.textContent:""; } else v=e.value||"";
+    const s=document.createElement("span"); s.textContent=v||"—"; e.replaceWith(s);
+  });
+  box.querySelectorAll("label.f").forEach(l=>{ const nx=l.nextElementSibling; const d=document.createElement("div"); d.className="pf"; const b=document.createElement("b"); b.textContent=l.childNodes[0]?.textContent||l.textContent; d.appendChild(b); if(nx&&nx.tagName==="SPAN"){ d.appendChild(nx); } l.replaceWith(d); });
+  box.querySelectorAll(".row").forEach(r=>{ if(![...r.querySelectorAll("span")].some(s=>s.textContent!=="—")) r.remove(); });
+  return box.innerHTML;
+}
+function blockPrint(n){
+  const b=B[n-1]; let out=`<h2>Blocco ${n} – ${esc(b.t)}</h2>`;
+  b.tappe.forEach((tp,i)=>{
+    if(tp.school){ schedeIds().forEach(id=>{ out+=`<h3>Tappa ${i+1} – ${esc(tp.t)}: ${esc(inst(id).n)}</h3>`+staticTappa(tp.h(id)); }); }
+    else out+=`<h3>Tappa ${i+1} – ${esc(tp.t)}</h3>`+staticTappa(tp.h());
+  });
+  return out;
+}
+function printOut(which){
+  const head=`<h1>Le scuole del mio territorio</h1><p>${esc(get("stud.nome")||"")} · Classe ${esc(get("stud.classe")||"")} · Gruppo ${esc(get("stud.gruppo")||"")} · ${new Date().toLocaleDateString("it-IT")}</p>`;
+  let body = which==="all" ? sintesi()+B.map(b=>blockPrint(b.n)).join("") : blockPrint(+which);
+  const pr=document.getElementById("print"); pr.innerHTML=head+body;
+  try { window.print(); } catch(e) {}
+}
+function sintesi(){
+  const s=selected(); if(!s.length) return "";
+  return `<h2>Dossier: le mie scuole</h2>`+s.map((id,i)=>{ const sel=(get("b3.sel")||[]).find(x=>x&&x.ist===id)||{}; const pr=(get(`b5.s.${id}.prof`)||[]).filter(r=>r&&r.nome);
+    return `<h3>${i+1}. ${esc(inst(id).n)} – ${esc(sel.ind||"")}</h3>
+    <div class="pf"><b>Perché l'ho scelta</b>${esc(sel.mot||"—")}</div>
+    <div class="pf"><b>Materie caratterizzanti</b>${esc(autoMat(id)||get(`b3.conf.${id}.mat`)||"—")}</div>
+    <div class="pf"><b>Dati Eduscopio</b>Indice FGA ${esc(get(`b4.e.${id}.fga`)||"—")} · iscritti all'università ${esc(get(`b4.e.${id}.iscr`)||"—")}% · occupati ${esc(get(`b4.e.${id}.occ`)||"—")}% · coerenza ${esc(get(`b4.e.${id}.coe`)||"—")}%</div>
+    <table><tr><th>Professione</th><th>Cosa fa</th><th>Titolo richiesto</th><th>Coerenza</th></tr>${pr.map(r=>`<tr><td>${esc(r.nome)}</td><td>${esc(r.cosa)}</td><td>${esc(r.tit)}</td><td>${esc(r.coe)}</td></tr>`).join("")||"<tr><td colspan=4>—</td></tr>"}</table>
+    <div class="pf"><b>Raffronto con il Progetto di Sviluppo</b>${esc(get(`b5.raff.${id}`)||"—")}</div>
+    <div class="pf"><b>Open day e domande</b>${esc(get(`b5.d.${id}.open`)||"—")} · ${esc(get(`b5.d.${id}.dom`)||"")}</div>`; }).join("");
+}
+
+window.addEventListener("hashchange", route);
+route();
+}
+</script>
+</body>
+</html>
